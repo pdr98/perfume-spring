@@ -43,10 +43,13 @@ public class PerfumeController {
 	@GetMapping("/apagar")
 	public PerfumeModel apagar(@RequestParam Long id) {
 		
-		PerfumeModel perfume = SalvaDados.perfumes.stream()
-				.filter(p -> id.equals(p.getId()))
-				.findFirst()
-				.orElse(null);
+		PerfumeModel perfume = null;
+		for (PerfumeModel p : SalvaDados.perfumes) {
+			if (id.equals(p.getId())) {
+				perfume = p;
+				break;
+			}
+		}
 		
 		if (Objects.nonNull(perfume)) {
 			SalvaDados.perfumes.remove(perfume);
