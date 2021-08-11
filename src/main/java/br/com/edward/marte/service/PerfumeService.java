@@ -12,4 +12,5 @@ public interface PerfumeService {
 	Perfume apagar(Long id);
 	List<Perfume> listar();
 	Perfume consultar(Long id);
+	
 }

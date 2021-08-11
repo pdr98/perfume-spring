@@ -11,4 +11,5 @@ public interface PerfumeRepository {
 	Perfume apagar(Perfume domain);
 	List<Perfume> listar();
 	Optional<Perfume> consultar(Long id);
+	
 }
