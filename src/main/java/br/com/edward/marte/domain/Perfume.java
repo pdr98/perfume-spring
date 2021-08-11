@@ -1,24 +1,26 @@
-package br.com.edward.marte.model;
+package br.com.edward.marte.domain;
 
 import java.math.BigDecimal;
 
-public class PerfumeModel {
+import br.com.edward.marte.enuns.EnumTipoPerfume;
+
+public class Perfume {
 	
 	private static long gerador = 0;
 	
 	private Long id;
 	private String nome;
 	private BigDecimal valor;
-	private EnumTipoPerfumeModel tipo;
+	private EnumTipoPerfume tipo;
 	
-	public PerfumeModel(String nome, BigDecimal valor, EnumTipoPerfumeModel tipo) {
+	public Perfume(String nome, BigDecimal valor, EnumTipoPerfume tipo) {
 		this.id = ++gerador;
 		this.nome = nome;
 		this.valor = valor;
 		this.tipo = tipo;
 	}
 	
-	public void alterar(String nome, BigDecimal valor, EnumTipoPerfumeModel tipo) {
+	public void alterar(String nome, BigDecimal valor, EnumTipoPerfume tipo) {
 		this.nome = nome;
 		this.valor = valor;
 		this.tipo = tipo;
@@ -36,7 +38,7 @@ public class PerfumeModel {
 		return valor;
 	}
 
-	public EnumTipoPerfumeModel getTipo() {
+	public EnumTipoPerfume getTipo() {
 		return tipo;
 	}
 }

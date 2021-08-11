@@ -1,65 +1,54 @@
 package br.com.edward.marte.controller;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
+import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.edward.marte.armazenamento.SalvaDados;
-import br.com.edward.marte.model.EnumTipoPerfumeModel;
 import br.com.edward.marte.model.PerfumeModel;
+import br.com.edward.marte.service.PerfumeService;
 
 @RestController
 @RequestMapping("/perfume")
 public class PerfumeController {
 
-	@GetMapping("/cadastrar")
-	public PerfumeModel cadastrar(@RequestParam String nome,
-	                              @RequestParam BigDecimal valor,
-	                              @RequestParam EnumTipoPerfumeModel tipo) {
-		PerfumeModel p = new PerfumeModel(nome, valor, tipo);
-		SalvaDados.perfumes.add(p);
-		return p;
+	@Autowired
+	private PerfumeService perfumeService;
+	
+	@PostMapping("/cadastrar")
+	public PerfumeModel cadastrar(@Valid @RequestBody PerfumeModel model, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+            throw new RuntimeException("Parametros inválidos");
+        }
+		return new PerfumeModel(perfumeService.cadastrar(model));
 	}
 	
-	@GetMapping("/alterar")
-	public PerfumeModel alterar(@RequestParam Long id,
-			                    @RequestParam String nome,
-			                    @RequestParam BigDecimal valor,
-			                    @RequestParam EnumTipoPerfumeModel tipo) {
-		for (PerfumeModel p : SalvaDados.perfumes) {
-			if (id.equals(p.getId())) {
-				p.alterar(nome, valor, tipo);
-				return p;
-			}
-		}
-		return null;
+	@PutMapping("/alterar/{id}")
+	public PerfumeModel alterar(@PathVariable Long id, @Valid @RequestBody PerfumeModel model, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+            throw new RuntimeException("Parametros inválidos");
+        }
+		return new PerfumeModel(perfumeService.alterar(id, model));
 	}
 	
-	@GetMapping("/apagar")
-	public PerfumeModel apagar(@RequestParam Long id) {
-		
-		PerfumeModel perfume = null;
-		for (PerfumeModel p : SalvaDados.perfumes) {
-			if (id.equals(p.getId())) {
-				perfume = p;
-				break;
-			}
-		}
-		
-		if (Objects.nonNull(perfume)) {
-			SalvaDados.perfumes.remove(perfume);
-			return perfume;
-		}
-		return null;
+	@DeleteMapping("/apagar/{id}")
+	public PerfumeModel apagar(@PathVariable Long id) {
+		return new PerfumeModel(perfumeService.apagar(id));
 	}
 	
 	@GetMapping("/listar")
 	public List<PerfumeModel> listar() {
-		return SalvaDados.perfumes;
+		return perfumeService.listar().stream().map(PerfumeModel::new).collect(Collectors.toList());
 	}
 }
