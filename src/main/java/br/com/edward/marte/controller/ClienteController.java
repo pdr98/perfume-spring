@@ -28,7 +28,7 @@ public class ClienteController {
 	private ClienteService clienteService;
 	
 	@PostMapping("/cadastrar")
-	public ClienteModel CadastrarCliente(@Valid @RequestBody ClienteModel model) {
+	public ClienteModel CadastrarCliente(@RequestBody ClienteModel model) {
 		return new ClienteModel(clienteService.cadastrar(model));
 	}
 	

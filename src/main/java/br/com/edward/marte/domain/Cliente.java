@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class Cliente {
 
-	private static Long contador;
+	private static Long contador = 0L;
 	
 	private Long id;
 	private String nome;

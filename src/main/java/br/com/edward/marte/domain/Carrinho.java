@@ -1,6 +1,7 @@
 package br.com.edward.marte.domain;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,14 +11,26 @@ public class Carrinho {
 	
 	private List<ItemCompra> itens;	
 	private Long id;
+	private Cliente cliente;
+	private LocalDateTime data;
 	
-	
-	public Carrinho() {
+	public Carrinho(Cliente cliente) {
 		this.id = ++contador;
 		this.itens = new ArrayList<>();
+		this.cliente = cliente;
+		this.data = LocalDateTime.now();
 	}
 
-	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+
+	public LocalDateTime getData() {
+		return data;
+	}
+
+
 	public Long getId() {
 		return id;
 	}
@@ -34,8 +47,7 @@ public class Carrinho {
 		BigDecimal soma = BigDecimal.ZERO;
 		for(ItemCompra i : itens) {
 			soma = i.getValorTotal().add(soma);
-			return soma;
 		}
-		return null;
+		return soma;
 	}
 }
