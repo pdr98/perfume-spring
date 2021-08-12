@@ -32,4 +32,22 @@ public class PerfumeModel {
 		this.valor = domain.getValor();
 		this.tipo = domain.getTipo();
 	}
+	
+	public String getNome() {
+		return nome;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public BigDecimal getValor() {
+		return valor;
+	}
+
+	public EnumTipoPerfume getTipo() {
+		return tipo;
+	}
+	
+	
 }

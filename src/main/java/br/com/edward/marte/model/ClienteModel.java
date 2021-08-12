@@ -27,4 +27,17 @@ public class ClienteModel {
 		this.documento = domain.getDocumento();
 	}
 	
+	public String getNome() {
+		return nome;
+	}
+	
+	public String getDocumento() {
+		return documento;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	
+	
 }

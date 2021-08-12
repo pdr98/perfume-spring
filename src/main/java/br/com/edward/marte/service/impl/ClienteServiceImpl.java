@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.edward.marte.domain.Cliente;
+import br.com.edward.marte.exceptions.PerfumeNaoExisteException;
 import br.com.edward.marte.model.ClienteModel;
 import br.com.edward.marte.repository.ClienteRepository;
 import br.com.edward.marte.service.ClienteService;
@@ -33,19 +34,17 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public Cliente apagar(Long id) {
-		
-		return null;
+		return this.clienteRepository.apagar(this.consultar(id));
 	}
 
 	@Override
 	public List<Cliente> listar() {
-		
-		return null;
+		return this.clienteRepository.listar();
 	}
 
 	@Override
 	public Cliente consultar(final Long id) {
-		return this.clienteRepository.consultar(id);
+		return this.clienteRepository.consultar(id).orElseThrow(() -> new PerfumeNaoExisteException(id));
 	}
 	
 	

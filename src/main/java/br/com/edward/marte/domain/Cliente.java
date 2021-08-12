@@ -1,5 +1,6 @@
 package br.com.edward.marte.domain;
 
+
 import lombok.Getter;
 
 @Getter
@@ -21,4 +22,17 @@ public class Cliente {
 		this.nome = nome;
 		this.documento = documento;
 	}
+	
+	public String getNome() {
+		return nome;
+	}
+	
+	public String getDocumento() {
+		return documento;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+
 }
